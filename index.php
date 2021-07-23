@@ -7,5 +7,5 @@
  */
 
 require "Core/autoload.php";
-new Core\Controller("Home");
-
+$controller = new Core\Controller("Home");
+$controller->run();

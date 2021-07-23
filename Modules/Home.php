@@ -9,6 +9,8 @@
 namespace Modules;
 
 use Core\Module;
+use Core\Request;
+use Responses\BufferedResponse;
 
 /**
  * Description of Home
@@ -17,5 +19,10 @@ use Core\Module;
  */
 class Home implements Module
 {
-    //put your code here
+
+    public function run(Request $req): BufferedResponse {
+        $response = new BufferedResponse();
+        return $response;
+    }
+
 }
