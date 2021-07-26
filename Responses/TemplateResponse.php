@@ -9,15 +9,18 @@
 namespace Responses;
 
 use \Core\RequestResponse;
+use \Core\Template;
 
 /**
- * The most basic implementation of RequestResponse
- * Directly prints any output. Headers are to be set before printing
+ * Uses php output buffering.
+ * You can set headers at any time before end or request.
  *
  * @author azcraft
  */
-class InstantResponse implements RequestResponse
+class TemplateResponse implements RequestResponse
 {
+
+    private array $templates = [];
 
     /**
      * Sets http response code
@@ -38,20 +41,22 @@ class InstantResponse implements RequestResponse
     }
 
     /**
-     * Simply prints text.
-     * You can use echo instead.
-     * @param string $output
-     */
-    public function echo(string $output) {
-        echo $output;
-    }
-
-    /**
-     * Does nothing, since text is already printed
+     * Prints templates output
      * @return void
      */
     public function serve(): void {
-        
+        foreach ($this->templates as $template){
+            echo $template->run();
+        }
+    }
+
+    /**
+     * Addes a template to the response.
+     * You'll most likely use this only once per request
+     * @param Template $template
+     */
+    public function echo(Template $template) {
+        $this->templates[] = $template;
     }
 
 }

@@ -10,7 +10,8 @@ namespace Modules;
 
 use Core\Module;
 use Core\Request;
-use Responses\BufferedResponse;
+use Core\Template;
+use Responses\TemplateResponse;
 
 /**
  * Description of Home
@@ -20,8 +21,14 @@ use Responses\BufferedResponse;
 class Home implements Module
 {
 
-    public function run(Request $req): BufferedResponse {
-        $response = new BufferedResponse();
+    public function run(Request $req): TemplateResponse {
+        $response = new TemplateResponse(200);
+        $template = new Template("home.html");
+
+        $template->setVar("var1", "gosho");
+        $template->setVar("var2", "yep");
+
+        $response->echo($template);
         return $response;
     }
 

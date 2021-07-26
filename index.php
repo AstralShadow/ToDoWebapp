@@ -8,4 +8,6 @@
 
 require "Core/autoload.php";
 $controller = new Core\Controller("Home");
-$controller->run();
+$controller->execute();
+$controller->serve();
+throw new Exception(" ( ͡° ͜ʖ ͡°) ");
