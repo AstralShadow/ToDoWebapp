@@ -6,14 +6,18 @@
  * and open the template in the editor.
  */
 
-namespace Core;
+namespace Model;
 
 /**
- * Exception within Core class
+ * Represents a user
  *
  * @author azcraft
  */
-class Exception extends \Exception
+class User extends Core\Entity
 {
-    
+
+    private static string $tableName = "Users";
+    public string $name;
+    public string $password;
+
 }

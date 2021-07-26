@@ -6,14 +6,18 @@
  * and open the template in the editor.
  */
 
-namespace Core;
+namespace Model;
 
 /**
- * Exception within Core class
+ * Description of Session
  *
  * @author azcraft
  */
-class Exception extends \Exception
+class Session extends Core\Entity
 {
-    
+
+    private static string $tableName = "Sessions";
+    private string $token;
+    private User $user;
+
 }

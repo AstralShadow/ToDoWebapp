@@ -10,25 +10,22 @@ namespace Modules;
 
 use Core\Module;
 use Core\Request;
-use Core\Template;
-use Responses\TemplateResponse;
+use Core\Responses\TemplateResponse;
 
 /**
  * Description of Home
  *
  * @author azcraft
  */
-class Home implements Module
+class Home extends Module
 {
 
     public function run(Request $req): TemplateResponse {
-        $response = new TemplateResponse(200);
-        $template = new Template("home.html");
+        $response = new TemplateResponse(200, "home.html");
 
-        $template->setVar("var1", "gosho");
-        $template->setVar("var2", "yep");
+        $response->setVar("var1", "gosho");
+        $response->setVar("var2", 2);
 
-        $response->echo($template);
         return $response;
     }
 

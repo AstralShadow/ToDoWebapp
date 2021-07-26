@@ -6,7 +6,9 @@
  * and open the template in the editor.
  */
 
-namespace Responses;
+namespace Core\Responses;
+
+use \Core\InstantResponse;
 
 /**
  * Uses php output buffering.

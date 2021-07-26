@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Responses;
+namespace Core\Responses;
 
 use \Core\RequestResponse;
 use \Core\Template;
@@ -20,14 +20,15 @@ use \Core\Template;
 class TemplateResponse implements RequestResponse
 {
 
-    private array $templates = [];
+    private Template $template;
 
     /**
      * Sets http response code
      * @param int $httpResponseCode
      */
-    public function __construct(int $httpResponseCode = 200) {
+    public function __construct(int $httpResponseCode = 200, string $file = "default.html") {
         http_response_code($httpResponseCode);
+        $this->template = new Template($file);
     }
 
     /**
@@ -45,18 +46,11 @@ class TemplateResponse implements RequestResponse
      * @return void
      */
     public function serve(): void {
-        foreach ($this->templates as $template){
-            echo $template->run();
-        }
+        echo $this->template->run();
     }
 
-    /**
-     * Addes a template to the response.
-     * You'll most likely use this only once per request
-     * @param Template $template
-     */
-    public function echo(Template $template) {
-        $this->templates[] = $template;
+    public function __call($name, $arguments) {
+        $this->template->$name(...$arguments);
     }
 
 }

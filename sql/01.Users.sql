@@ -5,11 +5,11 @@
  */
 /**
  * Author:  azcraft
- * Created: 21.07.2021 г.
+ * Created: 26.07.2021 г.
  */
 
-CREATE DATABASE to_do;
-CREATE USER 'todo_web_app'@'localhost' IDENTIFIED BY 'p455w0RD';
-GRANT ALL PRIVILEGES ON ToDo.* TO 'todo_web_app'@'localhost';
-FLUSH PRIVILEGES;
+USE DATABASE to_do;
 
+CREATE TABLE Users(
+
+);

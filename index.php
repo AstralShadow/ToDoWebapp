@@ -7,7 +7,15 @@
  */
 
 require "Core/autoload.php";
+
 $controller = new Core\Controller("Home");
-$controller->execute();
-$controller->serve();
-throw new Exception(" ( ͡° ͜ʖ ͡°) ");
+$controller->usePDO("mysql:host=localhost;dbname=to_do", "todo_web_app", "p455w0RD");
+
+$controller->run();
+
+//throw new Exception(" ( ͡° ͜ʖ ͡°) ");
+
+$a = new ReflectionClass("Model\\User");
+
+var_dump($a->getDefaultProperties());
+var_dump($a->getDocComment());
