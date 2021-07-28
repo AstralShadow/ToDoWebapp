@@ -8,16 +8,29 @@
 
 namespace Model;
 
+use \Core\Entity;
+
 /**
  * Represents a user
  *
  * @author azcraft
  */
-class User extends Core\Entity
+class User extends Entity
 {
 
-    private static string $tableName = "Users";
+    public function __construct(string $name, string $password) {
+        $this->name = $name;
+        $this->password = $password;
+        parent::__construct();
+    }
+
+    protected static string $tableName = "Users";
+    protected static string $idName = "user_id";
     public string $name;
     public string $password;
+    public \DateTime $created;
+
+    #[References(sessions)]
+    public array $sessions;
 
 }

@@ -13,9 +13,12 @@ $controller->usePDO("mysql:host=localhost;dbname=to_do", "todo_web_app", "p455w0
 
 $controller->run();
 
-//throw new Exception(" ( ͡° ͜ʖ ͡°) ");
+$name = "Gosho";
+$user = Model\User::find(["name" => $name])[0];
+$sessions = Model\Session::find(["user" => $user]);
+var_dump(count($sessions), $user);
 
-$a = new ReflectionClass("Model\\User");
+var_dump($sessions[0]);
 
-var_dump($a->getDefaultProperties());
-var_dump($a->getDocComment());
+throw new Exception(" ( ͡° ͜ʖ ͡°) "); //( ͡° ͜ʖ ͡°) 
+

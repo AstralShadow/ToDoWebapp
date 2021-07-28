@@ -10,9 +10,12 @@
 
 USE to_do;
 
-CREATE TABLE Users(
-    user_id INT PRIMARY KEY AUTO_INCREMENT,
-    name NVARCHAR(60) NOT NULL UNIQUE,
-    password CHAR(60) NOT NULL,
-    created DATETIME DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE Sessions(
+    session_id INT PRIMARY KEY AUTO_INCREMENT,
+    token CHAR(36) NOT NULL UNIQUE,
+    user INT NOT NULL,
+    created DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id)
+        REFERENCES Users(user_id)
 );
