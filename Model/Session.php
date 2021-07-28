@@ -58,8 +58,7 @@ class Session extends Entity
     }
 
     /**
-     * Returns existing or creates new session,
-     *  storing the token in chocolate cookie
+     * Loads session from the token in the chocolate cookie
      * @return Session
      */
     public static function fromCookie(): ?Session {
@@ -75,6 +74,10 @@ class Session extends Entity
         return null;
     }
 
+    /**
+     * Saves this session's token into the chocolate cookie
+     * @return void
+     */
     public function saveInCookie(): void {
         setcookie(self::$cookieName, $this->token);
     }

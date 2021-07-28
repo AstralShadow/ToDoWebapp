@@ -8,10 +8,9 @@
 
 namespace Modules;
 
-use Core\Module;
-use Core\Request;
-use Core\Responses\TemplateResponse;
-use Model\User;
+use \Core\Module;
+use \Core\Request;
+use \Core\Responses\InstantResponse;
 
 /**
  * Description of Home
@@ -21,16 +20,10 @@ use Model\User;
 class Home extends Module
 {
 
-    public function run(Request $req): TemplateResponse {
-        $response = new TemplateResponse(200, "home.html");
+    public function run(Request $req): InstantResponse {
+        $response = new InstantResponse(501);
 
-        $data = User::find([]);
-        if (count($data) > 0){
-            User::delete($data[0]->getId());
-        }
-
-        $response->setVar("var1", "?");
-        $response->setVar("var2", "!");
+        $response->echo("Not implemented.");
 
         return $response;
     }

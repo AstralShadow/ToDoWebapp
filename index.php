@@ -9,7 +9,11 @@
 require "Core/autoload.php";
 
 $controller = new Core\Controller("Home");
-$controller->usePDO("mysql:host=localhost;dbname=to_do", "todo_web_app", "p455w0RD");
+$controller->usePDO(
+    "mysql:host=localhost;dbname=to_do",
+    "todo_web_app",
+    base64_decode("cDQ1NXcwUkQ=")
+);
 
 $controller->run();
 // throw new Exception(" ( ͡° ͜ʖ ͡°) "); //( ͡° ͜ʖ ͡°) 

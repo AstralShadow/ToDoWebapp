@@ -20,7 +20,7 @@ class User extends Entity
 
     public function __construct(string $name, string $password) {
         $this->name = $name;
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_BCRYPT);
         parent::__construct();
     }
 
@@ -32,6 +32,18 @@ class User extends Entity
 
     public function getSessions(): array {
         return Session::find(["user" => $this]);
+    }
+
+    public static function login(string $name, string $password): ?User {
+        $user = self::get(["name" => $name])[0] ?? null;
+        if (!isset($user) || !password_verify($password, $user->password)){
+            return null;
+        }
+        return $user;
+    }
+
+    public static function exists(string $name): bool {
+        return count(self::get(["name" => $name]));
     }
 
 }
