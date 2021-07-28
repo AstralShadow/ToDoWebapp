@@ -30,7 +30,8 @@ class User extends Entity
     public string $password;
     public \DateTime $created;
 
-    #[References(sessions)]
-    public array $sessions;
+    public function getSessions(): array {
+        return Session::find(["user" => $this]);
+    }
 
 }

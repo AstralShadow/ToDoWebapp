@@ -20,10 +20,11 @@ class Session extends Entity
 
     protected static string $tableName = "Sessions";
     protected static string $idName = "session_id";
+    protected static string $cookieName = "ToDoSession";
+    protected static string $postKey = "session";
     public string $token;
     public User $user;
     public \DateTime $created;
-    public \DateTime $last_used;
 
     public function __construct(User $user) {
         $this->user = $user;
@@ -51,9 +52,53 @@ class Session extends Entity
      * @param string $token
      * @return Session|null
      */
-    public static function getFromToken(string $token): ?Session {
+    public static function fromToken(string $token): ?Session {
         $sessions = self::find(["token" => $token]);
         return $sessions ? $sessions[0] : null;
+    }
+
+    /**
+     * Returns existing or creates new session,
+     *  storing the token in chocolate cookie
+     * @return Session
+     */
+    public static function fromCookie(): ?Session {
+        $token = $_COOKIE[self::$cookieName] ?? null;
+
+        if (isset($token)){
+            $session = self::fromToken($token);
+            if (isset($session)){
+                return $session;
+            }
+        }
+
+        return null;
+    }
+
+    public function saveInCookie(): void {
+        setcookie(self::$cookieName, $this->token);
+    }
+
+    /**
+     * Returns session based on $_POST
+     * @return Session|null
+     */
+    public static function fromPOST(): ?Session {
+        if (is_string($_POST[self::$postKey] ?? null)){
+            $session = self::fromToken($_POST[self::$postKey]);
+            if (isset($session)){
+                return $session;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 
+     * @return Session
+     */
+    public static function fromPOSTorCookie(): ?Session {
+        return self::fromPOST() ?? self::fromCookie();
     }
 
 }

@@ -11,6 +11,7 @@ namespace Modules;
 use Core\Module;
 use Core\Request;
 use Core\Responses\TemplateResponse;
+use Model\User;
 
 /**
  * Description of Home
@@ -23,8 +24,13 @@ class Home extends Module
     public function run(Request $req): TemplateResponse {
         $response = new TemplateResponse(200, "home.html");
 
-        $response->setVar("var1", "gosho");
-        $response->setVar("var2", 2);
+        $data = User::find([]);
+        if (count($data) > 0){
+            User::delete($data[0]->getId());
+        }
+
+        $response->setVar("var1", "?");
+        $response->setVar("var2", "!");
 
         return $response;
     }
