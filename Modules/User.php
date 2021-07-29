@@ -28,7 +28,11 @@ class User extends Module
 
         if (count($args)){
             if ($method != Request::METHOD_GET){
-                return new ApiResponse(403);
+                $response = new ApiResponse(400);
+                $response->echo([
+                    "error" => "Невалидна заявка"
+                ]);
+                return $response;
             }
             return $this->getPublicData($args[0]);
         }
@@ -47,7 +51,7 @@ class User extends Module
 
         $response = new ApiResponse(400);
         $response->echo([
-            "error" => "Read the docs."
+            "error" => "Невалидна заявка"
         ]);
         return $response;
     }
@@ -60,7 +64,7 @@ class User extends Module
         ){
             $response = new ApiResponse(400);
             $response->echo([
-                "error" => "Send name and password to create user."
+                "error" => "Изпратете name и password за да създадете акаунт"
             ]);
             return $response;
         }
@@ -70,7 +74,7 @@ class User extends Module
         if (strlen($name) < 2){
             $response = new ApiResponse(400);
             $response->echo([
-                "error" => "Send name and password to create user."
+                "error" => "Моля попълнете име и парола"
             ]);
             return $response;
         }
@@ -78,7 +82,7 @@ class User extends Module
         if (MUser::exists($name)){
             $response = new ApiResponse(409);
             $response->echo([
-                "error" => "User already exists."
+                "error" => "Потребителят вече съществува"
             ]);
             return $response;
         }
@@ -90,11 +94,15 @@ class User extends Module
     public function getPublicData(string $name): ApiResponse {
         $user = MUser::find(["name" => $name]);
         if (count($user) == 0){
-            return new ApiResponse(404);
+            $response = new ApiResponse(404);
+            $response->echo([
+                "error" => "Потребителят не беше намерен"
+            ]);
+            return $response;
         }
 
         unset($user->password);
-        $response = new ApiResponse(501);
+        $response = new ApiResponse(200);
         $response->echo($user);
         return $response;
     }
@@ -104,14 +112,14 @@ class User extends Module
         if (!isset($session)){
             $response = new ApiResponse(403);
             $response->echo([
-                "error" => "Forbidden"
+                "error" => "Достъпът отказан"
             ]);
             return $response;
         }
 
         $user = $session->user;
 
-        $response = new ApiResponse(501);
+        $response = new ApiResponse(200);
         $response->echo($user);
         return $response;
     }
@@ -121,7 +129,7 @@ class User extends Module
         if (!isset($session)){
             $response = new ApiResponse(403);
             $response->echo([
-                "error" => "Forbidden"
+                "error" => "Достъпът отказан"
             ]);
             return $response;
         }

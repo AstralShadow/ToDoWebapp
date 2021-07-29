@@ -39,7 +39,7 @@ class Session extends Module
 
         $response = new ApiResponse(400);
         $response->echo([
-            "error" => "Read the docs."
+            "error" => "Невалидна заявка"
         ]);
         return $response;
     }
@@ -49,7 +49,7 @@ class Session extends Module
         if (!isset($session)){
             $response = new ApiResponse(404);
             $response->echo([
-                "error" => "Not found"
+                "error" => "Невалидна сесия"
             ]);
             return $response;
         }
@@ -71,7 +71,7 @@ class Session extends Module
         ){
             $response = new ApiResponse(400);
             $response->echo([
-                "error" => "Send name and password to login."
+                "error" => "Изпратете name и password за да влезете"
             ]);
             return $response;
         }
@@ -92,7 +92,7 @@ class Session extends Module
 
         $response = new ApiResponse(403);
         $response->echo([
-            "error" => "Authentication failed"
+            "error" => "Грешно име или парола"
         ]);
         return $response;
     }
@@ -102,7 +102,7 @@ class Session extends Module
         if (!isset($session)){
             $response = new ApiResponse(404);
             $response->echo([
-                "error" => "Not Found"
+                "error" => "Сесията не е намерена"
             ]);
             return $response;
         }
