@@ -37,13 +37,21 @@ class Session extends Module
             return $this->delete();
         }
 
-        return new ApiResponse(400);
+        $response = new ApiResponse(400);
+        $response->echo([
+            "error" => "Read the docs."
+        ]);
+        return $response;
     }
 
     public function getData() {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
-            return new ApiResponse(404);
+            $response = new ApiResponse(404);
+            $response->echo([
+                "error" => "Not found"
+            ]);
+            return $response;
         }
 
         $response = new ApiResponse(200);
@@ -75,20 +83,28 @@ class Session extends Module
             $session = new MSession($user);
             $session->saveInCookie();
 
-            $response = new ApiResponse(201);
+            $response = new ApiResponse(200);
             $response->echo([
                 "token" => $session->token
             ]);
             return $response;
         }
 
-        return new ApiResponse(403);
+        $response = new ApiResponse(403);
+        $response->echo([
+            "error" => "Authentication failed"
+        ]);
+        return $response;
     }
 
     public function delete() {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
-            return new ApiResponse(404);
+            $response = new ApiResponse(404);
+            $response->echo([
+                "error" => "Not Found"
+            ]);
+            return $response;
         }
 
         MSession::delete($session->getId());

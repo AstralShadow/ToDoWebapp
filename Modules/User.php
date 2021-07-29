@@ -45,10 +45,14 @@ class User extends Module
             return $this->deleteUser();
         }
 
-        return new ApiResponse(400);
+        $response = new ApiResponse(400);
+        $response->echo([
+            "error" => "Read the docs."
+        ]);
+        return $response;
     }
 
-    public function createUser(): ?piResponse {
+    public function createUser(): ?ApiResponse {
         if (
             !isset($_POST["name"], $_POST["password"]) ||
             !is_string($_POST["name"]) ||
@@ -63,6 +67,14 @@ class User extends Module
         $name = trim($_POST["name"]);
         $pwd = trim($_POST["password"]);
 
+        if (strlen($name) < 2){
+            $response = new ApiResponse(400);
+            $response->echo([
+                "error" => "Send name and password to create user."
+            ]);
+            return $response;
+        }
+
         if (MUser::exists($name)){
             $response = new ApiResponse(409);
             $response->echo([
@@ -71,8 +83,8 @@ class User extends Module
             return $response;
         }
 
-        new User($name, $pwd);
-        return new ApiResponse(201);
+        new MUser($name, $pwd);
+        return new ApiResponse(200);
     }
 
     public function getPublicData(string $name): ApiResponse {
@@ -90,7 +102,11 @@ class User extends Module
     public function getPrivateData(): ApiResponse {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
-            return new ApiResponse(403);
+            $response = new ApiResponse(403);
+            $response->echo([
+                "error" => "Forbidden"
+            ]);
+            return $response;
         }
 
         $user = $session->user;
@@ -103,7 +119,11 @@ class User extends Module
     public function deleteUser(): ApiResponse {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
-            return new ApiResponse(403);
+            $response = new ApiResponse(403);
+            $response->echo([
+                "error" => "Forbidden"
+            ]);
+            return $response;
         }
         $user = $session->user;
         foreach ($user->getSessions() as $session){

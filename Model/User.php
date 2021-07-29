@@ -35,7 +35,7 @@ class User extends Entity
     }
 
     public static function login(string $name, string $password): ?User {
-        $user = self::get(["name" => $name])[0] ?? null;
+        $user = self::find(["name" => $name])[0] ?? null;
         if (!isset($user) || !password_verify($password, $user->password)){
             return null;
         }
@@ -43,7 +43,7 @@ class User extends Entity
     }
 
     public static function exists(string $name): bool {
-        return count(self::get(["name" => $name]));
+        return count(self::find(["name" => $name]));
     }
 
 }
