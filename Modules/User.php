@@ -8,11 +8,11 @@
 
 namespace Modules;
 
-use Core\Module;
-use Core\Request;
-use Core\Responses\ApiResponse;
-use Model\User as MUser;
-use Model\Session as MSession;
+use \Core\Module;
+use \Core\Request;
+use \Core\Responses\ApiResponse;
+use \Model\User as MUser;
+use \Model\Session as MSession;
 
 /**
  * Description of Home
