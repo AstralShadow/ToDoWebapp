@@ -16,6 +16,6 @@ CREATE TABLE Sessions(
     user INT NOT NULL,
     created DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (user_id)
+    FOREIGN KEY (user)
         REFERENCES Users(user_id)
 );
