@@ -21,7 +21,7 @@ class Session extends Entity
     protected static string $tableName = "Sessions";
     protected static string $idName = "session_id";
     protected static string $cookieName = "ToDoSession";
-    protected static string $postKey = "session";
+    protected static string $postKey = "token";
     public string $token;
     public User $user;
     public \DateTime $created;

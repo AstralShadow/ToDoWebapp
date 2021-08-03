@@ -10,29 +10,29 @@
 
 USE to_do;
 
-DROP TABLE Progress;
+DROP TABLE IF EXISTS Progress;
 
-DROP TABLE Tasks_Users;
-DROP TABLE Tasks_Projects;
+DROP TABLE IF EXISTS Tasks_Users;
+DROP TABLE IF EXISTS Tasks_Projects;
 
-DROP TABLE Tasks;
+DROP TABLE IF EXISTS Tasks;
 
-DROP TABLE Projects_Users;
-DROP TABLE Projects_Teams;
-DROP TABLE Projects_Organisations;
+DROP TABLE IF EXISTS Projects_Users;
+DROP TABLE IF EXISTS Projects_Teams;
+DROP TABLE IF EXISTS Projects_Organisations;
 
-DROP TABLE Projects;
+DROP TABLE IF EXISTS Projects;
 
-DROP TABLE Users_Teams;
-DROP TABLE Users_Organisations;
+DROP TABLE IF EXISTS Users_Teams;
+DROP TABLE IF EXISTS Users_Organisations;
 
-DROP TABLE Teams;
+DROP TABLE IF EXISTS Teams;
 
-DROP Table Sessions;
+DROP Table IF EXISTS Sessions;
 
-DROP TABLE Users;
-DROP TABLE Organisations;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Organisations;
 
 
-DROP DATABASE to_do;
-# TODO: remove user
+DROP USER IF EXISTS 'todo_web_app'@'localhost';
+DROP DATABASE IF EXISTS to_do;

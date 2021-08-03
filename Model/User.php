@@ -18,17 +18,17 @@ use \Core\Entity;
 class User extends Entity
 {
 
-    public function __construct(string $name, string $password) {
-        $this->name = $name;
-        $this->password = password_hash($password, PASSWORD_BCRYPT);
-        parent::__construct();
-    }
-
     protected static string $tableName = "Users";
     protected static string $idName = "user_id";
     public string $name;
     public string $password;
     public \DateTime $created;
+
+    public function __construct(string $name, string $password) {
+        $this->name = $name;
+        $this->password = password_hash($password, PASSWORD_BCRYPT);
+        parent::__construct();
+    }
 
     public function getSessions(): array {
         return Session::find(["user" => $this]);
