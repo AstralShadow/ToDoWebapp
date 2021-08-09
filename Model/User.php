@@ -10,11 +10,6 @@ namespace Model;
 
 use \Core\Entity;
 
-/**
- * Represents a user
- *
- * @author azcraft
- */
 class User extends Entity
 {
 

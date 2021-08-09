@@ -10,11 +10,6 @@ namespace Model;
 
 use \Core\Entity;
 
-/**
- * Description of Session
- *
- * @author azcraft
- */
 class Session extends Entity
 {
 

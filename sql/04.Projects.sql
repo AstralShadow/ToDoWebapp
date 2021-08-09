@@ -14,11 +14,11 @@ CREATE TABLE Projects(
     project_id INT PRIMARY KEY AUTO_INCREMENT,
     name NVARCHAR(100) NOT NULL,
     description NVARCHAR(4096),
+    stage ENUM ('development', 'finished', 'dropped') NOT NULL,
 
     deadline DATETIME,
     created DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    stage ENUM ('development', 'finished', 'dropped') NOT NULL,
     modified DATETIME DEFAULT CURRENT_TIMESTAMP
     # Modifications are permitted only in development stage
 );
