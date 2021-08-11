@@ -17,13 +17,16 @@ class Session extends Entity
     protected static string $idName = "session_id";
     protected static string $cookieName = "ToDoSession";
     protected static string $postKey = "token";
-    public string $token;
-    public User $user;
+    protected string $token;
     public \DateTime $created;
+
+    #[traceable("getSessions")]
+    public User $user;
 
     public function __construct(User $user) {
         $this->user = $user;
         $this->token = $this->generateToken();
+        $this->created = new \DateTime();
         parent::__construct();
     }
 

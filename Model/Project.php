@@ -24,6 +24,7 @@ class Project extends Entity
 
     public function __construct(string $name) {
         $this->name = $name;
+        $this->created = new \DateTime();
         parent::__construct();
     }
 

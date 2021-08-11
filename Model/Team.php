@@ -22,6 +22,7 @@ class Team extends Entity
     public function __construct(Organisation $organisations, string $name) {
         $this->name = $name;
         $this->organisation = $organisations;
+        $this->created = new \DateTime();
         parent::__construct();
     }
 

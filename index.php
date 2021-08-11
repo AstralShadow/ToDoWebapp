@@ -6,7 +6,11 @@
  * and open the template in the editor.
  */
 
+define("DEBUG_STATUS_STRING", 1);
+
 require "Core/autoload.php";
+
+$start = microtime(1);
 
 $controller = new Core\Controller("Home");
 $controller->usePDO(
@@ -16,5 +20,16 @@ $controller->usePDO(
 );
 
 $controller->run();
-// throw new Exception(" ( ͡° ͜ʖ ͡°) "); //( ͡° ͜ʖ ͡°) 
 
+if (defined("DEBUG_STATUS_STRING")){
+    echo "( ͡° ͜ʖ ͡°) <br />\n";
+
+    echo "Time: ";
+    echo (microtime(1) - $start) * 1000;
+    echo "ms <br />\n";
+
+    echo "Memory: " . Core\getMemoryUsage() . "<br />\n";
+    \Core\Entity::printDebugStats();
+}
+
+var_dump(\Model\User::listReferenceTraces());

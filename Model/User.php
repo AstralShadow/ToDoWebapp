@@ -22,6 +22,7 @@ class User extends Entity
     public function __construct(string $name, string $password) {
         $this->name = $name;
         $this->password = password_hash($password, PASSWORD_BCRYPT);
+        $this->created = new \DateTime();
         parent::__construct();
     }
 

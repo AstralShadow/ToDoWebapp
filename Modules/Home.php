@@ -10,7 +10,9 @@ namespace Modules;
 
 use \Core\Module;
 use \Core\Request;
-use \Core\Responses\InstantResponse;
+use Core\Responses\BufferedResponse;
+use \Model\Session;
+use \Model\User;
 
 /**
  * Description of Home
@@ -20,10 +22,17 @@ use \Core\Responses\InstantResponse;
 class Home extends Module
 {
 
-    public function run(Request $req): InstantResponse {
-        $response = new InstantResponse(501);
+    public function run(Request $req): BufferedResponse {
+        $response = new BufferedResponse(501);
 
-        $response->echo("Not implemented.");
+        $session = Session::fromCookie();
+
+        if (!isset($session)){
+            $user = User::get(1);
+            $session = new Session($user);
+            $session->saveInCookie();
+        }
+        var_dump($session);
 
         return $response;
     }

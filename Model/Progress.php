@@ -25,6 +25,7 @@ class Progress extends Entity
         $this->task = $task;
         $this->task = $user;
         $this->task = $value;
+        $this->created = new \DateTime();
         parent::__construct();
     }
 
