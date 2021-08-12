@@ -15,7 +15,11 @@ class Progress extends Entity
 
     protected static string $tableName = "Progress";
     protected static string $idName = "progress_id";
+
+    #[traceable("getProgress")]
     public Task $task;
+
+    #[traceable("getProgress")]
     public User $user;
     public int $value;
     public ?string $note;

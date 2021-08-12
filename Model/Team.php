@@ -16,6 +16,8 @@ class Team extends Entity
     protected static string $tableName = "Teams";
     protected static string $idName = "team_id";
     public string $name;
+
+    #[traceable("getTeams")]
     public Organisation $organisation;
     public \DateTime $created;
 

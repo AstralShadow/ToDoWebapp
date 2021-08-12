@@ -25,14 +25,9 @@ class Home extends Module
     public function run(Request $req): BufferedResponse {
         $response = new BufferedResponse(501);
 
-        $session = Session::fromCookie();
-
-        if (!isset($session)){
-            $user = User::get(1);
-            $session = new Session($user);
-            $session->saveInCookie();
-        }
-        var_dump($session);
+        Session::init();
+        $user = User::get(1);
+        var_dump($user->getSessions());
 
         return $response;
     }

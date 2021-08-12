@@ -26,10 +26,6 @@ class User extends Entity
         parent::__construct();
     }
 
-    public function getSessions(): array {
-        return Session::find(["user" => $this]);
-    }
-
     public static function login(string $name, string $password): ?User {
         $user = self::find(["name" => $name])[0] ?? null;
         if (!isset($user) || !password_verify($password, $user->password)){

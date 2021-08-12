@@ -95,7 +95,7 @@ class Session extends Entity
     }
 
     /**
-     * 
+     * Tries POST, then tries chocolate cookie.
      * @return Session
      */
     public static function fromPOSTorCookie(): ?Session {
