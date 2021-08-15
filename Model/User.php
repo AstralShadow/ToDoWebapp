@@ -8,13 +8,18 @@
 
 namespace Model;
 
-use \Core\Entity;
+use Core\Entity;
+use Core\Attributes\Table;
+use Core\Attributes\PrimaryKey;
+use Core\Attributes\TraceLazyLoad;
 
+#[Table("Users")]
+#[PrimaryKey("user_id")]
+#[TraceLazyLoad("\Model\Session", "getSessions")]
+#[TraceLazyLoad("\Model\Junction\UserOrganisation", "getOrganisations")]
 class User extends Entity
 {
 
-    protected static string $tableName = "Users";
-    protected static string $idName = "user_id";
     public string $name;
     public string $password;
     public \DateTime $created;

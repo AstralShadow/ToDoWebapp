@@ -9,12 +9,21 @@
 namespace Model;
 
 use \Core\Entity;
+use \Core\Attributes\Table;
+use \Core\Attributes\PrimaryKey;
+use \Core\Attributes\TraceLazyLoad;
 
+/**
+ * Represents a top-level group of users.
+ * 
+ * @author azcraft
+ */
+#[Table("Organisations")]
+#[PrimaryKey("organisation_id")]
+#[TraceLazyLoad("\Model\Junction\UserOrganisation", "getUsers")]
 class Organisation extends Entity
 {
 
-    protected static string $tableName = "Organisations";
-    protected static string $idName = "organisation_id";
     public string $name;
     public \DateTime $created;
 

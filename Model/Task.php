@@ -17,9 +17,9 @@ class Task extends Entity
     protected static string $idName = "task_id";
     public string $name;
     public ?string $description;
-    private string $type;
-    private ?int $initial;
-    private ?int $goal;
+    protected string $type;
+    protected ?int $initial;
+    protected ?int $goal;
     public \DateTime $created;
 
     public function __construct(string $name) {

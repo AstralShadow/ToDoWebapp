@@ -9,18 +9,22 @@
 namespace Model;
 
 use \Core\Entity;
+use \Core\Attributes\Table;
+use \Core\Attributes\PrimaryKey;
+use \Core\Attributes\Traceable;
 
+#[Table("Sessions")]
+#[PrimaryKey("session_id")]
 class Session extends Entity
 {
 
-    protected static string $tableName = "Sessions";
-    protected static string $idName = "session_id";
-    protected static string $cookieName = "ToDoSession";
-    protected static string $postKey = "token";
+    const COOKIE_NAME = "ToDoSession";
+    const POST_KEY = "token";
+
     protected string $token;
     public \DateTime $created;
 
-    #[traceable("getSessions")]
+    #[Traceable("getSessions")]
     public User $user;
 
     public function __construct(User $user) {
@@ -60,7 +64,7 @@ class Session extends Entity
      * @return Session
      */
     public static function fromCookie(): ?Session {
-        $token = $_COOKIE[self::$cookieName] ?? null;
+        $token = $_COOKIE[self::COOKIE_NAME] ?? null;
 
         if (isset($token)){
             $session = self::fromToken($token);
@@ -77,7 +81,7 @@ class Session extends Entity
      * @return void
      */
     public function saveInCookie(): void {
-        setcookie(self::$cookieName, $this->token);
+        setcookie(self::COOKIE_NAME, $this->token);
     }
 
     /**
@@ -85,8 +89,8 @@ class Session extends Entity
      * @return Session|null
      */
     public static function fromPOST(): ?Session {
-        if (is_string($_POST[self::$postKey] ?? null)){
-            $session = self::fromToken($_POST[self::$postKey]);
+        if (is_string($_POST[self::POST_KEY] ?? null)){
+            $session = self::fromToken($_POST[self::POST_KEY]);
             if (isset($session)){
                 return $session;
             }
@@ -95,7 +99,7 @@ class Session extends Entity
     }
 
     /**
-     * Tries POST, then tries chocolate cookie.
+     * Tries POST, then tries chocolate cookie
      * @return Session
      */
     public static function fromPOSTorCookie(): ?Session {

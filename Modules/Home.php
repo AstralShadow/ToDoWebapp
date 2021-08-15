@@ -8,11 +8,13 @@
 
 namespace Modules;
 
-use \Core\Module;
-use \Core\Request;
+use Core\Module;
+use Core\Request;
 use Core\Responses\BufferedResponse;
-use \Model\Session;
-use \Model\User;
+use Model\Session;
+use Model\User;
+use Model\Junction\UserOrganisation;
+use Model\Organisation;
 
 /**
  * Description of Home
@@ -27,7 +29,16 @@ class Home extends Module
 
         Session::init();
         $user = User::get(1);
-        var_dump($user->getSessions());
+        $user->load();
+        $organisation = Organisation::get(1) ?? new Organisation("My corp");
+        var_dump(count($user->getOrganisations() ?? []));
+        $junction = new UserOrganisation($user, $organisation);
+
+        var_dump($junction);
+
+        if (mt_rand(1, 2) == 1){
+            UserOrganisation::delete($junction);
+        }
 
         return $response;
     }

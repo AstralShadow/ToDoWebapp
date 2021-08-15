@@ -33,3 +33,4 @@ if (defined("DEBUG_STATUS_STRING")){
 }
 
 var_dump(\Model\User::listReferenceTraces());
+var_dump(\Model\Organisation::listReferenceTraces());
