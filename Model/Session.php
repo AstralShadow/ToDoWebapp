@@ -24,7 +24,7 @@ class Session extends Entity
     protected string $token;
     public \DateTime $created;
 
-    #[Traceable("getSessions")]
+    #[Traceable("sessions")]
     public User $user;
 
     public function __construct(User $user) {
@@ -32,6 +32,14 @@ class Session extends Entity
         $this->token = $this->generateToken();
         $this->created = new \DateTime();
         parent::__construct();
+    }
+
+    /**
+     * Returns session token
+     * @return string
+     */
+    public function token(): string {
+        return $this->token;
     }
 
     /**

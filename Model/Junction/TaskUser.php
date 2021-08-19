@@ -12,46 +12,45 @@ use Core\Entity;
 use Core\Attributes\Table;
 use Core\Attributes\PrimaryKey;
 use Core\Attributes\Traceable;
+use Model\Task;
 use Model\User;
-use Model\Organisation;
 use DateTime;
 use Exception;
 
 /**
- * Junction: an User in Organisation
+ * Junction: a Task for User
  *
  * @author azcraft
  */
-#[Table("Users_Organisations")]
-#[PrimaryKey("user", "organisation")]
-class UserOrganisation extends Entity
+#[Table("Tasks_Users")]
+#[PrimaryKey("task", "user")]
+class TaskUser extends Entity
 {
 
     const PERMISSION_WORKER = "worker";
     const PERMISSION_MANAGER = "manager";
-    const PERMISSION_LEADER = "leader";
 
     public ?string $note = null;
     public DateTime $created;
     protected string $permission;
 
-    #[Traceable("organisations")]
-    public User $user;
-
     #[Traceable("users")]
-    public Organisation $organisation;
+    public Task $task;
+
+    #[Traceable("tasks")]
+    public User $user;
 
     /**
      * Creates a junction entry
      * @param User $user
-     * @param Organisation $organisation
+     * @param Team $team
      * @param string $permission
      */
-    public function __construct(User $user,
-                                Organisation $organisation,
+    public function __construct(Task $project,
+                                User $user,
                                 string $permission = self::PERMISSION_WORKER) {
         $this->user = $user;
-        $this->organisation = $organisation;
+        $this->project = $project;
         $this->setPermission($permission);
         $this->created = new DateTime();
         parent::__construct();
@@ -65,14 +64,13 @@ class UserOrganisation extends Entity
      */
     public function setPermission(string $permission): void {
         switch ($permission){
-            case self::PERMISSION_LEADER:
             case self::PERMISSION_MANAGER:
             case self::PERMISSION_WORKER:
                 $this->permission = $permission;
                 break;
 
             default:
-                throw new Exception("Illegal User permission in Organisation.");
+                throw new Exception("Illegal User permission in Task.");
         }
     }
 

@@ -19,6 +19,6 @@ CREATE TABLE Tasks(
     created DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     type ENUM ('actions', 'time') NOT NULL,
-    initial INT DEFAULT 0,
+    initial INT NOT NULL DEFAULT 0,
     goal INT
 );

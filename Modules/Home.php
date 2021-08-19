@@ -11,10 +11,13 @@ namespace Modules;
 use Core\Module;
 use Core\Request;
 use Core\Responses\BufferedResponse;
-use Model\Session;
 use Model\User;
-use Model\Junction\UserOrganisation;
 use Model\Organisation;
+use Model\Progress;
+use Model\Project;
+use Model\Team;
+use Model\Task;
+use Model\Session;
 
 /**
  * Description of Home
@@ -27,18 +30,21 @@ class Home extends Module
     public function run(Request $req): BufferedResponse {
         $response = new BufferedResponse(501);
 
-        Session::init();
-        $user = User::get(1);
-        $user->load();
-        $organisation = Organisation::get(1) ?? new Organisation("My corp");
-        var_dump(count($user->getOrganisations() ?? []));
-        $junction = new UserOrganisation($user, $organisation);
+        \Model\Junction\ProjectOrganisation::init();
+        \Model\Junction\ProjectTeam::init();
+        \Model\Junction\ProjectUser::init();
+        \Model\Junction\TaskProject::init();
+        \Model\Junction\TaskUser::init();
+        \Model\Junction\UserOrganisation::init();
+        \Model\Junction\UserTeam::init();
 
-        var_dump($junction);
-
-        if (mt_rand(1, 2) == 1){
-            UserOrganisation::delete($junction);
-        }
+        var_dump("User", User::listReferenceTraces());
+        var_dump("Organisation", Organisation::listReferenceTraces());
+        var_dump("Progress", Progress::listReferenceTraces());
+        var_dump("Project", Project::listReferenceTraces());
+        var_dump("Team", Team::listReferenceTraces());
+        var_dump("Task", Task::listReferenceTraces());
+        var_dump("Session", Session::listReferenceTraces());
 
         return $response;
     }

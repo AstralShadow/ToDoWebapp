@@ -58,7 +58,7 @@ class Session extends Module
         $response->echo([
             "user" => $session->user->name,
             "loginTime" => $session->created,
-            "token" => $session->token
+            "token" => $session->token()
         ]);
         return $response;
     }
@@ -85,7 +85,7 @@ class Session extends Module
 
             $response = new ApiResponse(200);
             $response->echo([
-                "token" => $session->token
+                "token" => $session->token()
             ]);
             return $response;
         }

@@ -31,6 +31,3 @@ if (defined("DEBUG_STATUS_STRING")){
     echo "Memory: " . Core\getMemoryUsage() . "<br />\n";
     \Core\Entity::printDebugStats();
 }
-
-var_dump(\Model\User::listReferenceTraces());
-var_dump(\Model\Organisation::listReferenceTraces());

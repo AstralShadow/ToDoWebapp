@@ -15,8 +15,12 @@ use Core\Attributes\TraceLazyLoad;
 
 #[Table("Users")]
 #[PrimaryKey("user_id")]
-#[TraceLazyLoad("\Model\Session", "getSessions")]
-#[TraceLazyLoad("\Model\Junction\UserOrganisation", "getOrganisations")]
+#[TraceLazyLoad("\Model\Session", "sessions")]
+#[TraceLazyLoad("\Model\Junction\UserOrganisation", "organisations")]
+#[TraceLazyLoad("\Model\Junction\UserTeam", "teams")]
+#[TraceLazyLoad("\Model\Junction\ProjectUser", "projects")]
+#[TraceLazyLoad("\Model\Junction\TaskUser", "tasks")]
+#[TraceLazyLoad("\Model\Progress", "progress")]
 class User extends Entity
 {
 
@@ -24,6 +28,11 @@ class User extends Entity
     public string $password;
     public \DateTime $created;
 
+    /**
+     * Registers a user
+     * @param string $name
+     * @param string $password
+     */
     public function __construct(string $name, string $password) {
         $this->name = $name;
         $this->password = password_hash($password, PASSWORD_BCRYPT);
@@ -31,6 +40,12 @@ class User extends Entity
         parent::__construct();
     }
 
+    /**
+     * Returns user object based on credentials
+     * @param string $name
+     * @param string $password
+     * @return User|null
+     */
     public static function login(string $name, string $password): ?User {
         $user = self::find(["name" => $name])[0] ?? null;
         if (!isset($user) || !password_verify($password, $user->password)){
@@ -39,6 +54,11 @@ class User extends Entity
         return $user;
     }
 
+    /**
+     * Returns whether a user exists
+     * @param string $name
+     * @return bool
+     */
     public static function exists(string $name): bool {
         return count(self::find(["name" => $name]));
     }

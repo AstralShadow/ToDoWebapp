@@ -8,28 +8,32 @@
 
 namespace Model;
 
-use \Core\Entity;
+use Core\Entity;
+use Core\Attributes\Table;
+use Core\Attributes\PrimaryKey;
+use Core\Attributes\Traceable;
+use DateTime;
 
+#[Table("Progress")]
+#[PrimaryKey("progress_id")]
 class Progress extends Entity
 {
 
-    protected static string $tableName = "Progress";
-    protected static string $idName = "progress_id";
-
-    #[traceable("getProgress")]
-    public Task $task;
-
-    #[traceable("getProgress")]
-    public User $user;
     public int $value;
     public ?string $note;
-    public \DateTime $created;
+    public DateTime $created;
+
+    #[Traceable("progress")]
+    public Task $task;
+
+    #[Traceable("progress")]
+    public User $user;
 
     public function __construct(Task $task, User $user, int $value) {
         $this->task = $task;
         $this->task = $user;
         $this->task = $value;
-        $this->created = new \DateTime();
+        $this->created = new DateTime();
         parent::__construct();
     }
 
