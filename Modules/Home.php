@@ -29,23 +29,28 @@ class Home extends Module
 
     public function run(Request $req): InstantResponse {
         $response = new InstantResponse(501);
-        define("DEBUG_STATUS_STRING", 1);
 
-        \Model\Junction\ProjectOrganisation::init();
-        \Model\Junction\ProjectTeam::init();
-        \Model\Junction\ProjectUser::init();
-        \Model\Junction\TaskProject::init();
-        \Model\Junction\TaskUser::init();
-        \Model\Junction\UserOrganisation::init();
-        \Model\Junction\UserTeam::init();
+        /* \Model\Junction\ProjectOrganisation::init();
+          \Model\Junction\ProjectTeam::init();
+          \Model\Junction\ProjectUser::init();
+          \Model\Junction\TaskProject::init();
+          \Model\Junction\TaskUser::init();
+          \Model\Junction\UserOrganisation::init();
+          \Model\Junction\UserTeam::init();
+          $descriptions = [];
 
-        var_dump("User", User::listReferenceTraces());
-        var_dump("Organisation", Organisation::listReferenceTraces());
-        var_dump("Progress", Progress::listReferenceTraces());
-        var_dump("Project", Project::listReferenceTraces());
-        var_dump("Team", Team::listReferenceTraces());
-        var_dump("Task", Task::listReferenceTraces());
-        var_dump("Session", Session::listReferenceTraces());
+          $descriptions["Session"] = Session::listReferenceTraces();
+          $descriptions["Progress"] = Progress::listReferenceTraces();
+          $descriptions["User"] = User::listReferenceTraces();
+          $descriptions["Organisation"] = Organisation::listReferenceTraces();
+          $descriptions["Project"] = Project::listReferenceTraces();
+          $descriptions["Team"] = Team::listReferenceTraces();
+          $descriptions["Task"] = Task::listReferenceTraces();
+
+          var_dump($descriptions);
+         */
+
+        var_dump(User::get(1)->sessions());
 
         return $response;
     }
