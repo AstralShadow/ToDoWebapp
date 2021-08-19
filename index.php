@@ -8,7 +8,7 @@
 
 #define("DEBUG_PRINT_QUERY_TYPES", 1);
 #define("DEBUG_AUTOLOAD_LOG", 1);
-define("DEBUG_STATUS_STRING", 1);
+#define("DEBUG_STATUS_STRING", 1);
 
 $start = microtime(1);
 
