@@ -69,7 +69,7 @@ class Task extends Entity
         $query = $pdo->prepare(<<<EOF
                 SELECT SUM(value) as progress
                 FROM Progress
-                WHERE task = :?
+                WHERE task = ?
             EOF);
         $query->execute([$this->getId()]);
         $data = $query->fetch(\PDO::FETCH_ASSOC);

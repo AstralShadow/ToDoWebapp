@@ -10,7 +10,7 @@ namespace Modules;
 
 use Core\Module;
 use Core\Request;
-use Core\Responses\BufferedResponse;
+use Core\Responses\InstantResponse;
 use Model\User;
 use Model\Organisation;
 use Model\Progress;
@@ -27,8 +27,9 @@ use Model\Session;
 class Home extends Module
 {
 
-    public function run(Request $req): BufferedResponse {
-        $response = new BufferedResponse(501);
+    public function run(Request $req): InstantResponse {
+        $response = new InstantResponse(501);
+        define("DEBUG_STATUS_STRING", 1);
 
         \Model\Junction\ProjectOrganisation::init();
         \Model\Junction\ProjectTeam::init();

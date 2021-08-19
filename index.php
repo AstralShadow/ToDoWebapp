@@ -6,11 +6,9 @@
  * and open the template in the editor.
  */
 
-define("DEBUG_STATUS_STRING", 1);
+$start = microtime(1);
 
 require "Core/autoload.php";
-
-$start = microtime(1);
 
 $controller = new Core\Controller("Home");
 $controller->usePDO(
