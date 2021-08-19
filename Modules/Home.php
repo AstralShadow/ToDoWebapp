@@ -9,19 +9,15 @@
 namespace Modules;
 
 use Core\Request;
-use Core\Responses\{
-    InstantResponse,
-    BufferedResponse,
-    TemplateResponse
-};
-use Core\Routes\{
-    GET,
-    PUT,
-    POST,
-    DELETE,
-    NotFound,
-    StartUp
-};
+use Core\Responses\InstantResponse;
+use Core\Responses\BufferedResponse;
+use Core\Responses\TemplateResponse;
+use Core\Routes\GET;
+use Core\Routes\PUT;
+use Core\Routes\POST;
+use Core\Routes\DELETE;
+use Core\Routes\NotFound;
+use Core\Routes\StartUp;
 
 /**
  * Description of Home
@@ -39,6 +35,15 @@ class Home
     #[GET("/")]
     public static function index(Request $req) {
         $response = new TemplateResponse(file: "index.html", code: 501);
+
+        return $response;
+    }
+
+    //#[GET("/{name=Anonymous}")]
+    #[GET("/{name}")]
+    public static function welcome(Request $req, string $name) {
+        $response = new TemplateResponse(file: "index.html", code: 501);
+        $response->setValues("Message", $name);
 
         return $response;
     }
