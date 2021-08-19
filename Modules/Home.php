@@ -27,7 +27,7 @@ use Model\Session;
 class Home extends Module
 {
 
-    public function run(Request $req): InstantResponse {
+    public static function run(Request $req): InstantResponse {
         $response = new InstantResponse(501);
 
         /* \Model\Junction\ProjectOrganisation::init();
