@@ -26,8 +26,9 @@ $controller->run();
 if (defined("DEBUG_STATUS_STRING")){
     echo "( ͡° ͜ʖ ͡°) <br />\n";
 
+    $end = microtime(1);
     echo "Time: ";
-    echo (microtime(1) - $start) * 1000;
+    echo ($end - $start) * 1000;
     echo "ms <br />\n";
 
     echo "Memory: " . Core\getMemoryUsage() . "<br />\n";
