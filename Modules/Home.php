@@ -9,8 +9,6 @@
 namespace Modules;
 
 use Core\Request;
-use Core\Responses\InstantResponse;
-use Core\Responses\BufferedResponse;
 use Core\Responses\TemplateResponse;
 use Core\RequestMethods\GET;
 use Core\RequestMethods\PUT;
@@ -34,7 +32,7 @@ class Home
     }
 
     #[GET("/")]
-    public static function index(Request $req)
+    public static function index()
     {
         $response = new TemplateResponse(file: "index.html", code: 501);
 
@@ -45,13 +43,13 @@ class Home
     public static function welcome(Request $req)
     {
         $response = new TemplateResponse(file: "index.html", code: 501);
-        $response->setValue("Message", $req->var("name"));
+        $response->setValue("Message", $req->name);
 
         return $response;
     }
 
     #[GET("/Anonymous")]
-    public static function hiAnon(Request $req)
+    public static function hiAnon()
     {
         $response = new TemplateResponse(file: "index.html", code: 501);
         $response->setValue("Message", "fellow brother");
@@ -60,7 +58,7 @@ class Home
     }
 
     #[Fallback]
-    public static function notFound(Request $req)
+    public static function notFound()
     {
         return new TemplateResponse(file: "404.html", code: 404);
     }
