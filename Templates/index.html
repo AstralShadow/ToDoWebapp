@@ -11,7 +11,11 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>${Message=""}</div>
-        <img src="${/Resources/img/test_img.jpeg}" alt="image" width="200" />
+        <h2> Ya did it. Your message is: </h2>
+        <div>${Message=undefined, like in js}</div>
+        <img src="${path:img/test_img.jpeg}" alt="image" width="200" />
+        <br />
+        ${parse:404.html}
+        <br />
     </body>
 </html>

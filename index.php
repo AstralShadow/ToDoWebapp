@@ -14,7 +14,12 @@ $start = microtime(1);
 
 require "Core/autoload.php";
 
-$controller = new Core\Controller("Home");
+$router = new Core\Router();
+$router->add("\Modules\Home", "/");
+//$router->add("\Modules\Session", "session");
+//$router->add("\Modules\User", "user");
+
+$controller = new Core\Controller($router);
 $controller->usePDO(
     "mysql:host=localhost;dbname=to_do",
     "todo_web_app",
@@ -26,8 +31,9 @@ $controller->run();
 if (defined("DEBUG_STATUS_STRING")){
     echo "( ͡° ͜ʖ ͡°) <br />\n";
 
+    $end = microtime(1);
     echo "Time: ";
-    echo (microtime(1) - $start) * 1000;
+    echo ($end - $start) * 1000;
     echo "ms <br />\n";
 
     echo "Memory: " . Core\getMemoryUsage() . "<br />\n";
