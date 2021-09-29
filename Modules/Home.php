@@ -12,12 +12,12 @@ use Core\Request;
 use Core\Responses\InstantResponse;
 use Core\Responses\BufferedResponse;
 use Core\Responses\TemplateResponse;
-use Core\Routes\GET;
-use Core\Routes\PUT;
-use Core\Routes\POST;
-use Core\Routes\DELETE;
-use Core\Routes\NotFound;
-use Core\Routes\StartUp;
+use Core\RequestMethods\GET;
+use Core\RequestMethods\PUT;
+use Core\RequestMethods\POST;
+use Core\RequestMethods\DELETE;
+use Core\RequestMethods\Fallback;
+use Core\RequestMethods\StartUp;
 
 /**
  * Description of Home
@@ -41,17 +41,26 @@ class Home
         return $response;
     }
 
-    //#[GET("/{name=Anonymous}")]
     #[GET("/{name}")]
-    public static function welcome(Request $req, string $name) {
+    public static function welcome(Request $req)
+    {
         $response = new TemplateResponse(file: "index.html", code: 501);
-        $response->setValues("Message", $name);
+        $response->setValue("Message", $req->var("name"));
 
         return $response;
     }
 
-    #[NotFound]
+    #[GET("/Anonymous")]
     public static function hiAnon(Request $req)
+    {
+        $response = new TemplateResponse(file: "index.html", code: 501);
+        $response->setValue("Message", "fellow brother");
+
+        return $response;
+    }
+
+    #[Fallback]
+    public static function notFound(Request $req)
     {
         return new TemplateResponse(file: "404.html", code: 404);
     }

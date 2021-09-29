@@ -14,7 +14,12 @@ $start = microtime(1);
 
 require "Core/autoload.php";
 
-$controller = new Core\Controller("Home");
+$router = new Core\Router();
+$router->add("\Modules\Home", "/");
+//$router->add("\Modules\Session", "session");
+//$router->add("\Modules\User", "user");
+
+$controller = new Core\Controller($router);
 $controller->usePDO(
     "mysql:host=localhost;dbname=to_do",
     "todo_web_app",
