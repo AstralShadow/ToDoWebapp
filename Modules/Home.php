@@ -28,12 +28,14 @@ class Home
 {
 
     #[StartUp]
-    public static function turnOnDebug(): void {
+    public static function turnOnDebug(): void
+    {
         define("DEBUG_STATUS_STRING", 1);
     }
 
     #[GET("/")]
-    public static function index(Request $req) {
+    public static function index(Request $req)
+    {
         $response = new TemplateResponse(file: "index.html", code: 501);
 
         return $response;
@@ -49,7 +51,8 @@ class Home
     }
 
     #[NotFound]
-    public static function notFound(Request $req) {
+    public static function hiAnon(Request $req)
+    {
         return new TemplateResponse(file: "404.html", code: 404);
     }
 

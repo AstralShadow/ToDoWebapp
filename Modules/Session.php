@@ -8,7 +8,6 @@
 
 namespace Modules;
 
-use \Core\Module;
 use \Core\Request;
 use \Core\Responses\ApiResponse;
 use \Model\User as MUser;
@@ -19,10 +18,11 @@ use \Model\Session as MSession;
  *
  * @author azcraft
  */
-class Session extends Module
+class Session
 {
 
-    public function run(Request $req): ApiResponse {
+    public function run(Request $req): ApiResponse
+    {
         $method = $req->method();
 
         if ($method == Request::METHOD_GET){
@@ -44,7 +44,8 @@ class Session extends Module
         return $response;
     }
 
-    public function getData() {
+    public function getData()
+    {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
             $response = new ApiResponse(404);
@@ -63,7 +64,8 @@ class Session extends Module
         return $response;
     }
 
-    public function login() {
+    public function login()
+    {
         if (
             !isset($_POST["name"], $_POST["password"]) ||
             !is_string($_POST["name"]) ||
@@ -97,7 +99,8 @@ class Session extends Module
         return $response;
     }
 
-    public function delete() {
+    public function delete()
+    {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
             $response = new ApiResponse(404);

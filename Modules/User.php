@@ -8,7 +8,6 @@
 
 namespace Modules;
 
-use \Core\Module;
 use \Core\Request;
 use \Core\Responses\ApiResponse;
 use \Model\User as MUser;
@@ -19,10 +18,11 @@ use \Model\Session as MSession;
  *
  * @author azcraft
  */
-class User extends Module
+class User
 {
 
-    public function run(Request $req): ApiResponse {
+    public function run(Request $req): ApiResponse
+    {
         $args = $req->args();
         $method = $req->method();
 
@@ -56,7 +56,8 @@ class User extends Module
         return $response;
     }
 
-    public function createUser(): ?ApiResponse {
+    public function createUser(): ?ApiResponse
+    {
         if (
             !isset($_POST["name"], $_POST["password"]) ||
             !is_string($_POST["name"]) ||
@@ -91,7 +92,8 @@ class User extends Module
         return new ApiResponse(200);
     }
 
-    public function getPublicData(string $name): ApiResponse {
+    public function getPublicData(string $name): ApiResponse
+    {
         $user = MUser::find(["name" => $name]);
         if (count($user) == 0){
             $response = new ApiResponse(404);
@@ -107,7 +109,8 @@ class User extends Module
         return $response;
     }
 
-    public function getPrivateData(): ApiResponse {
+    public function getPrivateData(): ApiResponse
+    {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
             $response = new ApiResponse(403);
@@ -124,7 +127,8 @@ class User extends Module
         return $response;
     }
 
-    public function deleteUser(): ApiResponse {
+    public function deleteUser(): ApiResponse
+    {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
             $response = new ApiResponse(403);
