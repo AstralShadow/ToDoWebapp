@@ -18,7 +18,7 @@ use Core\RequestMethods\Fallback;
 use Core\RequestMethods\StartUp;
 
 /**
- * Description of Home
+ * Base module.
  *
  * @author azcraft
  */
