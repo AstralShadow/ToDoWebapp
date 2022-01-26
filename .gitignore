@@ -1,3 +1,13 @@
-nbproject/private/
+# Directories for personal stuff.
 private/
+archive/
+
+# Vim metadata and backup files. 
+.backup/
+*.swp
+tags
+*~
+
+# Netbeans private project data
+nbproject/private/
 
