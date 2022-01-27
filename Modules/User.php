@@ -10,6 +10,12 @@ namespace Modules;
 
 use \Core\Request;
 use \Core\Responses\ApiResponse;
+use Core\RequestMethods\GET;
+use Core\RequestMethods\PUT;
+use Core\RequestMethods\POST;
+use Core\RequestMethods\DELETE;
+use Core\RequestMethods\Fallback;
+use Core\RequestMethods\StartUp;
 use \Model\User as MUser;
 use \Model\Session as MSession;
 
@@ -21,42 +27,8 @@ use \Model\Session as MSession;
 class User
 {
 
-    public function run(Request $req): ApiResponse
-    {
-        $args = $req->args();
-        $method = $req->method();
-
-        if (count($args)){
-            if ($method != Request::METHOD_GET){
-                $response = new ApiResponse(400);
-                $response->echo([
-                    "error" => "Невалидна заявка"
-                ]);
-                return $response;
-            }
-            return $this->getPublicData($args[0]);
-        }
-
-        if ($method == Request::METHOD_POST){
-            return $this->createUser();
-        }
-
-        if ($method == Request::METHOD_GET){
-            return $this->getPrivateData();
-        }
-
-        if ($method == Request::METHOD_DELETE){
-            return $this->deleteUser();
-        }
-
-        $response = new ApiResponse(400);
-        $response->echo([
-            "error" => "Невалидна заявка"
-        ]);
-        return $response;
-    }
-
-    public function createUser(): ?ApiResponse
+    #[POST]
+    public static function createUser()
     {
         if (
             !isset($_POST["name"], $_POST["password"]) ||
@@ -66,6 +38,7 @@ class User
             $response = new ApiResponse(400);
             $response->echo([
                 "error" => "Изпратете name и password за да създадете акаунт"
+                // Send name and password to create account
             ]);
             return $response;
         }
@@ -76,6 +49,7 @@ class User
             $response = new ApiResponse(400);
             $response->echo([
                 "error" => "Моля попълнете име и парола"
+                // Please, fill the name and password fields
             ]);
             return $response;
         }
@@ -83,7 +57,7 @@ class User
         if (MUser::exists($name)){
             $response = new ApiResponse(409);
             $response->echo([
-                "error" => "Потребителят вече съществува"
+                "error" => "Потребителят вече съществува" // User already existing
             ]);
             return $response;
         }
@@ -92,13 +66,15 @@ class User
         return new ApiResponse(200);
     }
 
-    public function getPublicData(string $name): ApiResponse
+    #[GET("/{name}")]
+    public static function publicData(Request $req)
     {
+        $name = $req->name;
         $user = MUser::find(["name" => $name]);
         if (count($user) == 0){
             $response = new ApiResponse(404);
             $response->echo([
-                "error" => "Потребителят не беше намерен"
+                "error" => "Потребителят не беше намерен" // User not found
             ]);
             return $response;
         }
@@ -109,13 +85,14 @@ class User
         return $response;
     }
 
-    public function getPrivateData(): ApiResponse
+    #[GET]
+    public static function privateData()
     {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
             $response = new ApiResponse(403);
             $response->echo([
-                "error" => "Достъпът отказан"
+                "error" => "Достъпът отказан" // Access denied
             ]);
             return $response;
         }
@@ -127,13 +104,14 @@ class User
         return $response;
     }
 
-    public function deleteUser(): ApiResponse
+    #[DELETE]
+    public static function deleteUser()
     {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
             $response = new ApiResponse(403);
             $response->echo([
-                "error" => "Достъпът отказан"
+                "error" => "Достъпът отказан" // Access denied
             ]);
             return $response;
         }
@@ -145,6 +123,16 @@ class User
         MUser::delete($user->getId());
 
         return new ApiResponse(200);
+    }
+
+    #[Fallback]
+    public static function fallback()
+    {
+        $response = new ApiResponse(400);
+        $response->echo([
+            "error" => "Невалидна заявка" // Invalid request
+        ]);
+        return $response;
     }
 
 }

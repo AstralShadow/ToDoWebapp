@@ -16,8 +16,8 @@ require "Core/autoload.php";
 
 $router = new Core\Router();
 $router->add("\Modules\Home", "/");
-//$router->add("\Modules\Session", "session");
-//$router->add("\Modules\User", "user");
+$router->add("\Modules\Session", "session");
+$router->add("\Modules\User", "user");
 
 $controller = new Core\Controller($router);
 $controller->usePDO(

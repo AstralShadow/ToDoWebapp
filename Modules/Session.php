@@ -10,6 +10,12 @@ namespace Modules;
 
 use \Core\Request;
 use \Core\Responses\ApiResponse;
+use \Core\RequestMethods\GET;
+use \Core\RequestMethods\PUT;
+use \Core\RequestMethods\POST;
+use \Core\RequestMethods\DELETE;
+use \Core\RequestMethods\FALLBACK;
+use \Core\RequestMethods\StartUp;
 use \Model\User as MUser;
 use \Model\Session as MSession;
 
@@ -20,37 +26,14 @@ use \Model\Session as MSession;
  */
 class Session
 {
-
-    public function run(Request $req): ApiResponse
-    {
-        $method = $req->method();
-
-        if ($method == Request::METHOD_GET){
-            return $this->getData();
-        }
-
-        if ($method == Request::METHOD_POST){
-            return $this->login();
-        }
-
-        if ($method == Request::METHOD_DELETE){
-            return $this->delete();
-        }
-
-        $response = new ApiResponse(400);
-        $response->echo([
-            "error" => "Невалидна заявка"
-        ]);
-        return $response;
-    }
-
-    public function getData()
+    #[GET]
+    public static function getSessionData()
     {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
             $response = new ApiResponse(404);
             $response->echo([
-                "error" => "Невалидна сесия"
+                "error" => "Невалидна сесия" // Invalid session
             ]);
             return $response;
         }
@@ -64,7 +47,8 @@ class Session
         return $response;
     }
 
-    public function login()
+    #[POST]
+    public static function login()
     {
         if (
             !isset($_POST["name"], $_POST["password"]) ||
@@ -74,6 +58,7 @@ class Session
             $response = new ApiResponse(400);
             $response->echo([
                 "error" => "Изпратете name и password за да влезете"
+                // Send name and password to authenticate
             ]);
             return $response;
         }
@@ -94,18 +79,19 @@ class Session
 
         $response = new ApiResponse(403);
         $response->echo([
-            "error" => "Грешно име или парола"
+            "error" => "Грешно име или парола" // Wrong name or password
         ]);
         return $response;
     }
 
-    public function delete()
+    #[DELETE]
+    public static function logout()
     {
         $session = MSession::fromPOSTorCookie();
         if (!isset($session)){
             $response = new ApiResponse(404);
             $response->echo([
-                "error" => "Сесията не е намерена"
+                "error" => "Сесията не е намерена" // Session not found
             ]);
             return $response;
         }
@@ -113,5 +99,16 @@ class Session
         MSession::delete($session->getId());
         return new ApiResponse(200);
     }
+
+    #[Fallback]
+    public static function fallback()
+    {
+        $response = new ApiResponse(400);
+        $response->echo([
+            "error" => "Невалидна заявка" // Invalid request
+        ]);
+        return $response;
+    }
+
 
 }

@@ -27,13 +27,12 @@ class Home
 
     #[StartUp]
     public static function turnOnDebug(): void
-    {
-        define("DEBUG_STATUS_STRING", 1);
-    }
+    { }
 
-    #[GET("/")]
+    #[GET] // works the same as GET("/")
     public static function index()
     {
+        define("DEBUG_STATUS_STRING", 1);
         $response = new TemplateResponse(file: "index.html", code: 501);
 
         return $response;
